@@ -12,9 +12,9 @@ public class ArtistEntry extends LibraryEntry {
         this.artist = artist;
     }
 
-    @Override
-    public boolean matchesName(String name) {
-        return artist.getUsername().equalsIgnoreCase(name);
-    }
+    //@Override
+//    public boolean matchesName(String name) {
+//        return artist.getUsername().equalsIgnoreCase(name);
+//    }
 
 }
