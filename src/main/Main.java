@@ -122,6 +122,7 @@ public final class Main {
                 case "removePodcast" -> outputs.add(CommandRunner.removePodcast(command));
                 case "addMerch" -> outputs.add(CommandRunner.addMerch(command));
                 case "addEvent" -> outputs.add(CommandRunner.addEvent(command));
+                case "getAllUsers" -> outputs.add(CommandRunner.getAllUsers(command));
                 default -> System.out.println("Invalid command " + commandName);
             }
         }

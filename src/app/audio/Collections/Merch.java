@@ -9,7 +9,7 @@ public class Merch {
     @Getter
     private double price;
 
-    public Merch(String name, String description, double price) {
+    public Merch(final String name, final String description, final double price) {
         this.name = name;
         this.description = description;
         this.price = price;

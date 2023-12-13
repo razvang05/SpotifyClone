@@ -4,10 +4,8 @@ import app.audio.Collections.Album;
 import app.audio.Collections.AlbumOutput;
 import app.audio.Collections.Playlist;
 import app.audio.Collections.Podcast;
-import app.audio.Files.ArtistEntry;
 import app.audio.Files.Episode;
 import app.audio.Files.Song;
-import app.audio.LibraryEntry;
 import app.user.Artist;
 import app.user.Host;
 import app.user.User;
@@ -19,6 +17,7 @@ import lombok.Getter;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * The type Admin.
@@ -172,7 +171,7 @@ public final class Admin {
         }
 
         for (User user : users) {
-            if(user.isConnected() == true) {
+            if (user.isConnected() == true) {
                 user.simulateTime(elapsed);
             }
         }
@@ -235,15 +234,15 @@ public final class Admin {
     public static List<String> getOnlineUsers() {
 
         List<String> onlineUsers = new ArrayList<>();
-        for(User user : users) {
-            if(user.isConnected() == true && (user.getType() == null || user.getType().equals("user"))) {
+        for (User user : users) {
+            if (user.isConnected() == true && (user.getType() == null || user.getType().equals("user"))) {
                 onlineUsers.add(user.getUsername());
             }
         }
         return onlineUsers;
     }
 
-    public static String addUser(String username, String userType, int age, String city) {
+    public static String addUser(final String username, final String userType, final int age, final String city) {
         // Verificăm dacă există deja un utilizator cu acest nume
         if (getUser(username) != null || getArtist(username) != null || getHost(username) != null) {
             return "The username " + username + " is already taken.";
@@ -267,7 +266,7 @@ public final class Admin {
         return "The username " + username + " has been added successfully.";
     }
 
-    public static List<AlbumOutput> showAlbums(String artistUsername) {
+    public static List<AlbumOutput> showAlbums(final String artistUsername) {
         Artist artist = getArtist(artistUsername);
 
         List<AlbumOutput> albumsOutput = new ArrayList<>();
@@ -310,12 +309,38 @@ public final class Admin {
         return allAlbums;
     }
 
+    public static List<String> getAllUsers() {
+        List<String> userNames = new ArrayList<>();
+
+        // Adaugă numele utilizatorilor normali
+        List<String> normalUsers = users.stream()
+                .map(User::getUsername)
+                .collect(Collectors.toList());
+
+        // Adaugă numele artiștilor
+        List<String> artistUsers = artists.stream()
+                .map(Artist::getUsername)
+                .collect(Collectors.toList());
+
+        // Adaugă numele hostilor
+        List<String> hostUsers = hosts.stream()
+                .map(Host::getUsername)
+                .collect(Collectors.toList());
+
+        // Combină și sortează toate numele
+        userNames = Stream.of(normalUsers, artistUsers, hostUsers)
+                .flatMap(List::stream)
+                .collect(Collectors.toList());
+
+        return userNames;
+    }
+
 
     public static void addEpisode(final Episode episode) {
         episodes.add(episode);
     }
 
-    public static void removePodcast(Podcast podcast) {
+    public static void removePodcast(final Podcast podcast) {
         podcasts.remove(podcast);
     }
 }

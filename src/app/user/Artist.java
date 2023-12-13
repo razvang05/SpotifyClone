@@ -22,11 +22,11 @@ import app.audio.Collections.Album;
 
 public class Artist extends LibraryEntry {
     @Getter
-    private String username;
+    private final String username;
     @Getter
-    private int age;
+    private final int age;
     @Getter
-    private String city;
+    private final String city;
     @Getter
     private List<Album> albums;
     @Getter
@@ -35,7 +35,7 @@ public class Artist extends LibraryEntry {
     private List<Merch> merchs = new ArrayList<>();
     private Enums.PageType pageType;
 
-    public Artist(String username, int age, String city) {
+    public Artist(final String username, final int age, final String city) {
         super(username);
         this.username = username;
         this.age = age;
@@ -45,7 +45,7 @@ public class Artist extends LibraryEntry {
 
     // Metode pentru gestionarea albumelor
 
-    public String addAlbum(CommandInput commandInput) {
+    public String addAlbum(final CommandInput commandInput) {
         if (getAlbumByName(commandInput.getName()) != null) {
             return "has another album with the same name.";
         }
@@ -71,7 +71,7 @@ public class Artist extends LibraryEntry {
         return "has added new album successfully.";
     }
 
-    public Album getAlbumByName(String albumName) {
+    public Album getAlbumByName(final String albumName) {
         for (Album album : albums) {
             if (album.getName().equals(albumName)) {
                 return album;
@@ -80,11 +80,11 @@ public class Artist extends LibraryEntry {
         return null;
     }
 
-    public void addEvent(Event event) {
+    public void addEvent(final Event event) {
         events.add(event);
     }
 
-    public String addEvent(CommandInput commandInput) {
+    public String addEvent(final CommandInput commandInput) {
 
         String eventName = commandInput.getName();
         String description = commandInput.getDescription();
@@ -108,7 +108,7 @@ public class Artist extends LibraryEntry {
         return username + " has added new event successfully.";
     }
 
-    public Event hasEventWithName(String eventName) {
+    public Event hasEventWithName(final String eventName) {
         for (Event event : events) {
             if (event.getName().equals(eventName)) {
                 return event;
@@ -116,14 +116,14 @@ public class Artist extends LibraryEntry {
         }
         return null;
     }
-    private LocalDate parseDate(String dateString) throws DateTimeParseException, InvalidDateException {
+    private LocalDate parseDate(final String dateString) throws DateTimeParseException, InvalidDateException {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         LocalDate date = LocalDate.parse(dateString, formatter);
         validateDate(date);
         return date;
     }
 
-    private void validateDate(LocalDate date) throws InvalidDateException {
+    private void validateDate(final LocalDate date) throws InvalidDateException {
         if (date.getYear() < 1900 || date.getYear() > 2023 ||
                 date.getMonthValue() > 12 ||
                 (date.getMonth() == Month.FEBRUARY && date.getDayOfMonth() > 28) ||
@@ -133,16 +133,16 @@ public class Artist extends LibraryEntry {
     }
 
     private class InvalidDateException extends Exception {
-        public InvalidDateException(String errorMessage) {
+        public InvalidDateException(final String errorMessage) {
             super(errorMessage);
         }
     }
 
-    public void addMerch(Merch merch) {
+    public void addMerch(final Merch merch) {
         merchs.add(merch);
 
     }
-    public String addMerch(CommandInput commandInput) {
+    public String addMerch(final CommandInput commandInput) {
         String merchName = commandInput.getName();
         String description = commandInput.getDescription();
         double price = commandInput.getPrice();
@@ -154,7 +154,7 @@ public class Artist extends LibraryEntry {
             return username + " has merchandise with the same name.";
         }
 
-        if(price < 0) {
+        if (price < 0) {
             return "Price for merchandise can not be negative.";
         }
 
@@ -163,7 +163,7 @@ public class Artist extends LibraryEntry {
         return username + " has added new merchandise successfully.";
     }
 
-    private Merch hasMerchWithName(String merchName) {
+    private Merch hasMerchWithName(final String merchName) {
         for (Merch merch : merchs) {
             if (merch.getName().equals(merchName)) {
                 return merch;

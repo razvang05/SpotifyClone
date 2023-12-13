@@ -1,6 +1,6 @@
 package app.user;
+
 import app.Admin;
-import app.audio.Collections.Album;
 import app.audio.Collections.Podcast;
 
 import java.util.ArrayList;
@@ -9,12 +9,11 @@ import java.util.List;
 import java.util.Set;
 
 import app.audio.Files.Episode;
-import app.audio.Files.Song;
+
 import app.player.Player;
 import app.utils.Enums;
 import fileio.input.CommandInput;
 import fileio.input.EpisodeInput;
-import fileio.input.SongInput;
 import lombok.Getter;
 
 public class Host {
@@ -28,7 +27,7 @@ public class Host {
     private List<Podcast> podcasts; // presupunem că avem o clasă Podcast definită anterior
     private Enums.PageType pageType;
 
-    public Host(String username, int age, String city) {
+    public Host(final String username, final int age, final String city) {
         this.username = username;
         this.age = age;
         this.city = city;
@@ -36,7 +35,7 @@ public class Host {
     }
 
     // Metode pentru gestionarea podcasturilor
-    public String addPodcast(CommandInput commandInput) {
+    public String addPodcast(final CommandInput commandInput) {
         // Verificăm dacă există deja un podcast cu acest nume
         for (Podcast podcast : podcasts) {
             if (podcast.getName().equals(commandInput.getName())) {
@@ -64,7 +63,7 @@ public class Host {
         return "has added new podcast successfully.";
     }
 
-    private Podcast getPodcastByName(String podcastName) {
+    private Podcast getPodcastByName(final String podcastName) {
         for (Podcast podcast : this.podcasts) {
             if (podcast.getName().equals(podcastName)) {
                 return podcast;
@@ -74,7 +73,7 @@ public class Host {
     }
 
     // Metoda pentru a elimina un podcast din lista
-    private void removePodcast(Podcast podcast) {
+    private void removePodcast(final Podcast podcast) {
         podcasts.remove(podcast);
     }
 
@@ -97,7 +96,7 @@ public class Host {
 
         // Ștergem podcastul
         host.removePodcast(podcast);
-        Admin.removePodcast(podcast); // Presupunem că Admin are o metodă pentru a șterge podcasturile
+        Admin.removePodcast(podcast);
         return "deleted the podcast successfully.";
     }
 

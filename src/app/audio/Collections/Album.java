@@ -2,8 +2,6 @@ package app.audio.Collections;
 
 import app.audio.Files.AudioFile;
 import app.audio.Files.Song;
-import app.audio.LibraryEntry;
-import fileio.input.SongInput;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -24,7 +22,7 @@ public class Album extends AudioCollection {
     @Setter
     private List<Song> songs;
 
-    public Album(String name, int releaseYear, String description) {
+    public Album(final String name, final int releaseYear, final String description) {
         super(name, "owner");
         this.name = name;
         this.releaseYear = releaseYear;
@@ -35,7 +33,7 @@ public class Album extends AudioCollection {
 
 
     // Metoda pentru adăugarea unei melodii în album
-    public void addSong(Song song) {
+    public void addSong(final Song song) {
         songs.add(song);
     }
 
@@ -50,7 +48,7 @@ public class Album extends AudioCollection {
     }
 
     @Override
-    public AudioFile getTrackByIndex(int index) {
+    public AudioFile getTrackByIndex(final int index) {
         return songs.get(index);
     }
 

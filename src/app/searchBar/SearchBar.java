@@ -2,14 +2,13 @@ package app.searchBar;
 
 
 import app.Admin;
-import app.audio.Collections.Album;
 import app.audio.LibraryEntry;
 import lombok.Getter;
-import app.audio.Files.ArtistEntry;
+
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 import static app.searchBar.FilterUtils.filterByAlbum;
 import static app.searchBar.FilterUtils.filterByArtist;

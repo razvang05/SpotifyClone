@@ -15,8 +15,8 @@ public final class Podcast extends AudioCollection {
         this.episodes = episodes;
     }
 
-    public Podcast(String name, String username) {
-        super(name,username);
+    public Podcast(final String name, final String username) {
+        super(name, username);
         this.episodes = new ArrayList<>();
     }
 
@@ -34,7 +34,7 @@ public final class Podcast extends AudioCollection {
         return episodes.get(index);
     }
 
-    public void addEpisode(Episode episode) {
+    public void addEpisode(final Episode episode) {
         episodes.add(episode);
     }
 }

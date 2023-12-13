@@ -9,7 +9,7 @@ public class AlbumOutput {
     @Getter
     private List<String> songs;
 
-    public AlbumOutput(String name, List<String> songs) {
+    public AlbumOutput(final String name, final List<String> songs) {
         this.name = name;
         this.songs = songs;
     }

@@ -1,5 +1,6 @@
 package app.user;
 
+import app.Admin;
 import app.audio.Collections.Album;
 import app.audio.Collections.AudioCollection;
 import app.audio.Collections.Playlist;
@@ -13,6 +14,7 @@ import app.searchBar.Filters;
 import app.searchBar.SearchBar;
 import app.utils.Enums;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +43,9 @@ public class User {
     private String type;
     @Getter
     private Enums.PageType pageType;
+    @Getter
+    @Setter
+    private Artist currentArtist;
 
     /**
      * Instantiates a new User.
@@ -62,7 +67,7 @@ public class User {
         this.isConnected = true;
         this.pageType = Enums.PageType.HOME_PAGE;
     }
-    public User(String username, String type, int age, String city) {
+    public User(final String username, final String type, final int age, final String city) {
         this.username = username;
         this.age = age;
         this.city = city;
@@ -114,6 +119,13 @@ public class User {
 
         if (selected == null) {
             return "The selected ID is too high.";
+        }
+        if (searchBar.getLastSearchType().equals("artist")) {
+            pageType = Enums.PageType.ARTIST_PAGE;
+            //currentArtist = (Artist) selected;
+            Artist artist = Admin.getArtist(selected.getName());
+            setCurrentArtist(artist);
+            return "Successfully selected %s".formatted(selected.getName()) + "'s page.";
         }
 
         return "Successfully selected %s.".formatted(selected.getName());
@@ -510,7 +522,7 @@ public class User {
     }
 
 
-    public String switchConnectionStatus(String username) {
+    public String switchConnectionStatus(final String username) {
 
         isConnected = !isConnected;
         return username + " has changed status successfully.";

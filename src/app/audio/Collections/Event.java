@@ -11,7 +11,7 @@ public class Event {
     @Getter
     private LocalDate date;
 
-    public Event(String name, String description, LocalDate date) {
+    public Event(final String name, final String description, final LocalDate date) {
         this.name = name;
         this.description = description;
         this.date = date;

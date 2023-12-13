@@ -1,8 +1,6 @@
 package app;
 
-import app.audio.Collections.Album;
-import app.audio.Collections.AlbumOutput;
-import app.audio.Collections.PlaylistOutput;
+import app.audio.Collections.*;
 import app.audio.Files.Song;
 import app.player.PlayerStats;
 import app.searchBar.Filters;
@@ -15,9 +13,10 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import fileio.input.CommandInput;
 import fileio.input.SongInput;
-import app.audio.Collections.Playlist;
 
+import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * The type Command runner.
@@ -445,7 +444,7 @@ public final class CommandRunner {
 
         return objectNode;
     }
-    public static ObjectNode switchConnectionStatus(CommandInput commandInput) {
+    public static ObjectNode switchConnectionStatus(final CommandInput commandInput) {
         User user = Admin.getUser(commandInput.getUsername());
         String message;
         if (user == null) {
@@ -464,7 +463,7 @@ public final class CommandRunner {
         return objectNode;
     }
 
-    public static ObjectNode getOnlineUsers(CommandInput commandInput) {
+    public static ObjectNode getOnlineUsers(final CommandInput commandInput) {
         List<String> users = Admin.getOnlineUsers();
 
         ObjectNode objectNode = objectMapper.createObjectNode();
@@ -474,7 +473,7 @@ public final class CommandRunner {
 
         return objectNode;
     }
-    public static ObjectNode addUser(CommandInput commandInput) {
+    public static ObjectNode addUser(final CommandInput commandInput) {
         String username = commandInput.getUsername();
         int age = commandInput.getAge();
         String city = commandInput.getCity();
@@ -491,7 +490,7 @@ public final class CommandRunner {
         return objectNode;
     }
 
-    public static ObjectNode addAlbum(CommandInput commandInput) {
+    public static ObjectNode addAlbum(final CommandInput commandInput) {
         Artist artist = Admin.getArtist(commandInput.getUsername());
         User user = Admin.getUser(commandInput.getUsername());
         Host host = Admin.getHost(commandInput.getUsername());
@@ -513,7 +512,7 @@ public final class CommandRunner {
         return objectNode;
     }
 
-    public static ObjectNode addEvent(CommandInput commandInput) {
+    public static ObjectNode addEvent(final CommandInput commandInput) {
         Artist artist = Admin.getArtist(commandInput.getUsername());
         User user = Admin.getUser(commandInput.getUsername());
         Host host = Admin.getHost(commandInput.getUsername());
@@ -535,7 +534,7 @@ public final class CommandRunner {
         return objectNode;
     }
 
-    public static ObjectNode addMerch(CommandInput commandInput) {
+    public static ObjectNode addMerch(final CommandInput commandInput) {
         Artist artist = Admin.getArtist(commandInput.getUsername());
         User user = Admin.getUser(commandInput.getUsername());
         Host host = Admin.getHost(commandInput.getUsername());
@@ -556,7 +555,7 @@ public final class CommandRunner {
 
         return objectNode;
     }
-    public static ObjectNode addPodcast(CommandInput commandInput) {
+    public static ObjectNode addPodcast(final CommandInput commandInput) {
         Host host = Admin.getHost(commandInput.getUsername());
         User user = Admin.getUser(commandInput.getUsername());
         Artist artist = Admin.getArtist(commandInput.getUsername());
@@ -578,7 +577,7 @@ public final class CommandRunner {
         return objectNode;
     }
 
-    public static ObjectNode removePodcast(CommandInput commandInput) {
+    public static ObjectNode removePodcast(final CommandInput commandInput) {
         Host host = Admin.getHost(commandInput.getUsername());
         User user = Admin.getUser(commandInput.getUsername());
         Artist artist = Admin.getArtist(commandInput.getUsername());
@@ -600,7 +599,7 @@ public final class CommandRunner {
         return objectNode;
     }
 
-    public static ObjectNode showAlbums(CommandInput commandInput) {
+    public static ObjectNode showAlbums(final CommandInput commandInput) {
         ObjectMapper objectMapper = new ObjectMapper();
         List<AlbumOutput> albums = Admin.showAlbums(commandInput.getUsername());
 
@@ -627,7 +626,7 @@ public final class CommandRunner {
         return objectNode;
     }
 
-    public static ObjectNode getTop5Albums(CommandInput commandInput) {
+    public static ObjectNode getTop5Albums(final CommandInput commandInput) {
         List<String> albums = Admin.getTop5Albums();
 
         ObjectNode objectNode = objectMapper.createObjectNode();
@@ -638,18 +637,39 @@ public final class CommandRunner {
         return objectNode;
     }
 
-    public static ObjectNode printCurrentPage(CommandInput commandInput) {
+    public static ObjectNode getAllUsers(final CommandInput commandInput) {
+        List<String> results = Admin.getAllUsers();
+
+
+        ObjectNode objectNode = objectMapper.createObjectNode();
+        objectNode.put("command", commandInput.getCommand());
+        objectNode.put("timestamp", commandInput.getTimestamp());
+        objectNode.put("result", objectMapper.valueToTree(results));
+
+        return objectNode;
+    }
+
+    public static ObjectNode printCurrentPage(final CommandInput commandInput) {
+        if ((Admin.getUser(commandInput.getUsername())).isConnected() == false){
+            ObjectNode objectNode = objectMapper.createObjectNode();
+            objectNode.put("user", commandInput.getUsername());
+            objectNode.put("command", commandInput.getCommand());
+            objectNode.put("timestamp", commandInput.getTimestamp());
+            objectNode.put("message", commandInput.getUsername() + " is offline.");
+
+            return objectNode;
+        }
         if (Admin.getUser(commandInput.getUsername()).getPageType().equals(Enums.PageType.HOME_PAGE)) {
             List<String> topSongs = new ArrayList<>();
             List<Playlist> topPlaylistList = new ArrayList<>();
             List<Song> topSongsList = new ArrayList<>();
             List<String> topPlayList = new ArrayList<>();
 
-            for(Song song : Admin.getUser(commandInput.getUsername()).getLikedSongs()) {
+            for (Song song : Admin.getUser(commandInput.getUsername()).getLikedSongs()) {
                 topSongsList.add(song);
             }
 
-            for(Playlist playlist : Admin.getUser(commandInput.getUsername()).getPlaylists()) {
+            for (Playlist playlist : Admin.getUser(commandInput.getUsername()).getPlaylists()) {
                 topPlaylistList.add(playlist);
             }
             Collections.sort(topSongsList,
@@ -685,7 +705,46 @@ public final class CommandRunner {
             objectNode.put("message", "Liked songs:\n\t" + topSongs + "\n\nFollowed playlists:\n\t" + topPlayList);
 
             return objectNode;
+        } else if (Admin.getUser(commandInput.getUsername()).getPageType().equals(Enums.PageType.ARTIST_PAGE)) {
+            User user = Admin.getUser(commandInput.getUsername());
+            Artist artist = user.getCurrentArtist();
+
+            String albums = artist.getAlbums().isEmpty() ? "[]" :
+                    artist.getAlbums().stream()
+                            .map(Album::getName)
+                            .collect(Collectors.joining(", ", "[", "]"));
+
+            // Formatăm articolele de merch
+            String merchs = artist.getMerchs().isEmpty() ? "[]" :
+                    artist.getMerchs().stream()
+                            .map(item -> String.format("%s - %s:\n\t%s",
+                                    item.getName(),
+                                    item.getPrice() % 1 == 0 ?
+                                            Integer.toString((int)item.getPrice()) :
+                                            Double.toString(item.getPrice()),
+                                    item.getDescription()))
+                            .collect(Collectors.joining(", ", "[", "]"));
+
+            // Formatăm evenimentele
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+            String events = artist.getEvents().isEmpty() ? "[]" :
+                    artist.getEvents().stream()
+                            .map(event -> String.format("%s - %s:\n\t%s",
+                                    event.getName(),
+                                    event.getDate().format(formatter),
+                                    event.getDescription()))
+                            .collect(Collectors.joining(", ", "[", "]"));
+
+
+            ObjectNode objectNode = objectMapper.createObjectNode();
+            objectNode.put("user", commandInput.getUsername());
+            objectNode.put("command", commandInput.getCommand());
+            objectNode.put("timestamp", commandInput.getTimestamp());
+            objectNode.put("message", "Albums:\n\t" + albums + "\n\nMerch:\n\t" + merchs + "\n\nEvents:\n\t" + events);
+
+            return objectNode;
         }
+
         ObjectNode objectNode = objectMapper.createObjectNode();
         objectNode.put("user", commandInput.getUsername());
         objectNode.put("command", commandInput.getCommand());
