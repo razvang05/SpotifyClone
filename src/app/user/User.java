@@ -46,6 +46,9 @@ public class User {
     @Getter
     @Setter
     private Artist currentArtist;
+    @Getter
+    @Setter
+    private Host currentHost;
 
     /**
      * Instantiates a new User.
@@ -125,6 +128,13 @@ public class User {
             //currentArtist = (Artist) selected;
             Artist artist = Admin.getArtist(selected.getName());
             setCurrentArtist(artist);
+            return "Successfully selected %s".formatted(selected.getName()) + "'s page.";
+        }
+        if (searchBar.getLastSearchType().equals("host")) {
+            pageType = Enums.PageType.HOST_PAGE;
+
+           Host host = Admin.getHost(selected.getName());
+            setCurrentHost(host);
             return "Successfully selected %s".formatted(selected.getName()) + "'s page.";
         }
 
@@ -536,4 +546,6 @@ public class User {
     public String getType() {
         return type;
     }
+
+
 }

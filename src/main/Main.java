@@ -70,7 +70,8 @@ public final class Main {
     public static void action(final String filePath1,
                               final String filePath2) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
-        LibraryInput library = objectMapper.readValue(new File(CheckerConstants.TESTS_PATH
+        LibraryInput library = LibraryInput.getInstance();
+        library = objectMapper.readValue(new File(CheckerConstants.TESTS_PATH
                                                                + "library/library.json"),
                                                                LibraryInput.class);
         CommandInput[] commands = objectMapper.readValue(new File(CheckerConstants.TESTS_PATH
@@ -123,6 +124,11 @@ public final class Main {
                 case "addMerch" -> outputs.add(CommandRunner.addMerch(command));
                 case "addEvent" -> outputs.add(CommandRunner.addEvent(command));
                 case "getAllUsers" -> outputs.add(CommandRunner.getAllUsers(command));
+                case "deleteUser" -> outputs.add(CommandRunner.deleteUser(command));
+                case "addAnnouncement" -> outputs.add(CommandRunner.addAnnouncement(command));
+                case "removeAnnouncement" ->
+                        outputs.add(CommandRunner.removeAnnouncement(command));
+                case "showPodcasts" -> outputs.add(CommandRunner.showPodcasts(command));
                 default -> System.out.println("Invalid command " + commandName);
             }
         }

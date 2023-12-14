@@ -57,7 +57,7 @@ public class Artist extends LibraryEntry {
             }
         }
 
-        Album newAlbum = new Album(commandInput.getName(), commandInput.getReleaseYear(),
+        Album newAlbum = new Album(commandInput.getUsername(), commandInput.getName(), commandInput.getReleaseYear(),
                 commandInput.getDescription());
         for (SongInput songInput : commandInput.getSongs()) {
             Song newSong = new Song(songInput.getName(), songInput.getDuration(), newAlbum.getName(),

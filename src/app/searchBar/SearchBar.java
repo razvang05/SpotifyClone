@@ -119,9 +119,20 @@ public final class SearchBar {
                 if (filters.getName() != null) {
                     entries = filterByName(entries, filters.getName());
                 }
+                if (filters.getOwner() != null) {
+                    entries = filterByOwner(entries, filters.getOwner());
+                }
                 break;
             case "artist":
                 entries = new ArrayList<>(Admin.getArtists());
+
+
+                if (filters.getName() != null) {
+                    entries = filterByName(entries, filters.getName());
+                }
+                break;
+            case "host":
+                entries = new ArrayList<>(Admin.getHosts());
 
 
                 if (filters.getName() != null) {

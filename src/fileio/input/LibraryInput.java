@@ -6,8 +6,16 @@ public final class LibraryInput {
     private ArrayList<SongInput> songs;
     private ArrayList<PodcastInput> podcasts;
     private ArrayList<UserInput> users;
+    private static LibraryInput instance = null;
 
     public LibraryInput() {
+    }
+
+    public static LibraryInput getInstance(){
+        if(instance == null){
+            instance = new LibraryInput();
+        }
+        return instance;
     }
 
     public ArrayList<SongInput> getSongs() {

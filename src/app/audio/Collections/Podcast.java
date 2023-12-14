@@ -3,11 +3,13 @@ package app.audio.Collections;
 import app.audio.Files.AudioFile;
 import app.audio.Files.Episode;
 import fileio.input.EpisodeInput;
+import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public final class Podcast extends AudioCollection {
+    @Getter
     private final List<Episode> episodes;
 
     public Podcast(final String name, final String owner, final List<Episode> episodes) {

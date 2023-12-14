@@ -162,16 +162,21 @@
   "timestamp" : 525,
   "message" : "Liked songs:\n\t[Aurora Harmony]\n\nFollowed playlists:\n\t[]"
 }, {
+  "command" : "deleteUser",
+  "user" : "sonicpainter",
+  "timestamp" : 620,
+  "message" : "sonicpainter can't be deleted."
+}, {
   "command" : "search",
   "user" : "soundseeker21",
   "timestamp" : 625,
-  "message" : "Search returned 0 results",
-  "results" : [ ]
+  "message" : "Search returned 1 results",
+  "results" : [ "audiosage" ]
 }, {
   "command" : "select",
   "user" : "soundseeker21",
   "timestamp" : 630,
-  "message" : "The selected ID is too high."
+  "message" : "Successfully selected audiosage's page."
 }, {
   "command" : "search",
   "user" : "carol19",
@@ -200,30 +205,85 @@
   "message" : "Search returned 1 results",
   "results" : [ "sonicpainter" ]
 }, {
+  "command" : "deleteUser",
+  "user" : "sonicpainter",
+  "timestamp" : 900,
+  "message" : "sonicpainter can't be deleted."
+}, {
+  "command" : "deleteUser",
+  "user" : "audiosage",
+  "timestamp" : 930,
+  "message" : "audiosage can't be deleted."
+}, {
+  "command" : "deleteUser",
+  "user" : "melodicwanderer",
+  "timestamp" : 960,
+  "message" : "melodicwanderer can't be deleted."
+}, {
   "command" : "repeat",
   "user" : "carol19",
   "timestamp" : 965,
   "message" : "Repeat mode changed to repeat all."
+}, {
+  "command" : "deleteUser",
+  "user" : "sonicpainter",
+  "timestamp" : 975,
+  "message" : "sonicpainter can't be deleted."
 }, {
   "command" : "removePodcast",
   "user" : "musicmaven",
   "timestamp" : 980,
   "message" : "musicmaven can't delete this podcast."
 }, {
+  "command" : "deleteUser",
+  "user" : "audiosage",
+  "timestamp" : 1100,
+  "message" : "audiosage can't be deleted."
+}, {
   "command" : "select",
   "user" : "david27",
   "timestamp" : 1225,
   "message" : "Successfully selected sonicpainter's page."
+}, {
+  "command" : "deleteUser",
+  "user" : "melodicwanderer",
+  "timestamp" : 1500,
+  "message" : "melodicwanderer can't be deleted."
+}, {
+  "command" : "deleteUser",
+  "user" : "musicmaven",
+  "timestamp" : 6900,
+  "message" : "musicmaven can't be deleted."
 }, {
   "command" : "repeat",
   "user" : "carol19",
   "timestamp" : 7200,
   "message" : "Repeat mode changed to repeat current song."
 }, {
+  "command" : "deleteUser",
+  "user" : "sonicpainter",
+  "timestamp" : 7225,
+  "message" : "sonicpainter can't be deleted."
+}, {
   "command" : "repeat",
   "user" : "carol19",
   "timestamp" : 7505,
   "message" : "Repeat mode changed to no repeat."
+}, {
+  "command" : "deleteUser",
+  "user" : "melodicwanderer",
+  "timestamp" : 7855,
+  "message" : "melodicwanderer was successfully deleted."
+}, {
+  "command" : "deleteUser",
+  "user" : "sonicpainter",
+  "timestamp" : 7860,
+  "message" : "sonicpainter can't be deleted."
+}, {
+  "command" : "deleteUser",
+  "user" : "sonicpainter",
+  "timestamp" : 7890,
+  "message" : "sonicpainter can't be deleted."
 }, {
   "user" : "bob35",
   "command" : "printCurrentPage",

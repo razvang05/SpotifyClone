@@ -20,13 +20,20 @@ public class Album extends AudioCollection {
     private String description;
     @Getter
     @Setter
+    private String username;
+    @Getter
+    private String owner;
+    @Getter
+    @Setter
     private List<Song> songs;
 
-    public Album(final String name, final int releaseYear, final String description) {
-        super(name, "owner");
+    public Album(final String username, final String name, final int releaseYear, final String description) {
+        super(name, username);
+        this.username = username;
         this.name = name;
         this.releaseYear = releaseYear;
         this.description = description;
+        this.owner = username;
         this.songs = new ArrayList<>();
     }
 

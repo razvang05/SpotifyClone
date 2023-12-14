@@ -5108,6 +5108,11 @@
   "timestamp" : 6041,
   "result" : [ "alice22", "bob35", "carol19", "david27", "emily30", "frank21", "grace25", "henry26", "irene33", "jack29" ]
 }, {
+  "command" : "deleteUser",
+  "user" : "cbutler",
+  "timestamp" : 6046,
+  "message" : "cbutler can't be deleted."
+}, {
   "command" : "shuffle",
   "user" : "carol19",
   "timestamp" : 6051,
@@ -23745,5 +23750,5 @@
 }, {
   "command" : "getTop5Albums",
   "timestamp" : 14849,
-  "result" : [ "Chill Dreams", "Chill Dirt", "Heroic Hood", "Groovy Harmonies", "Breezy View" ]
+  "result" : [ "Dynamic Technology", "Teen Hood", "Chill Hood", "Heroic Hood", "Bad Technology" ]
 } ]

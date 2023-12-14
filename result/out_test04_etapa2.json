@@ -95,26 +95,41 @@
   "timestamp" : 135,
   "message" : "Liked songs:\n\t[Rhythmic Revolution]\n\nFollowed playlists:\n\t[]"
 }, {
+  "command" : "deleteUser",
+  "user" : "beatblazer",
+  "timestamp" : 150,
+  "message" : "beatblazer can't be deleted."
+}, {
   "command" : "search",
   "user" : "alice22",
   "timestamp" : 190,
-  "message" : "Search returned 2 results",
-  "results" : [ "Rhythmic Resonance", "Beat Odyssey" ]
+  "message" : "Search returned 1 results",
+  "results" : [ "Beat Odyssey" ]
 }, {
   "command" : "select",
   "user" : "alice22",
   "timestamp" : 280,
-  "message" : "Successfully selected Rhythmic Resonance."
+  "message" : "Successfully selected Beat Odyssey."
 }, {
   "command" : "load",
   "user" : "alice22",
   "timestamp" : 285,
   "message" : "Playback loaded successfully."
 }, {
+  "command" : "deleteUser",
+  "user" : "beatblazer",
+  "timestamp" : 1158,
+  "message" : "beatblazer can't be deleted."
+}, {
   "command" : "prev",
   "user" : "alice22",
   "timestamp" : 1159,
-  "message" : "Please load a source before returning to the previous track."
+  "message" : "Returned to previous track successfully. The current track is Melodic Motion."
+}, {
+  "command" : "deleteUser",
+  "user" : "beatblazer",
+  "timestamp" : 1380,
+  "message" : "beatblazer was successfully deleted."
 }, {
   "command" : "search",
   "user" : "melodicmind42",
