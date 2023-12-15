@@ -18,6 +18,9 @@ import fileio.input.CommandInput;
 import fileio.input.EpisodeInput;
 import lombok.Getter;
 
+/**
+ * Represents a host in the system. Hosts can create and manage podcasts and announcements.
+ */
 public class Host extends LibraryEntry {
     @Getter
     private String username;
@@ -31,6 +34,14 @@ public class Host extends LibraryEntry {
     private List<Announcement> announcements = new ArrayList<>();
     private Enums.PageType pageType;
 
+    /**
+     * Constructs a new host with the given username, age, and city.
+     * Initializes the list of podcasts and announcements.
+     *
+     * @param username The host's username.
+     * @param age      The host's age.
+     * @param city     The host's city.
+     */
     public Host(final String username, final int age, final String city) {
         super(username);
         this.username = username;
@@ -72,6 +83,12 @@ public class Host extends LibraryEntry {
         return "has added new podcast successfully.";
     }
 
+    /**
+     * Retrieves a podcast by its name from the host's podcast list.
+     *
+     * @param podcastName The name of the podcast to retrieve.
+     * @return The podcast object if found, null otherwise.
+     */
     private Podcast getPodcastByName(final String podcastName) {
         for (Podcast podcast : this.podcasts) {
             if (podcast.getName().equals(podcastName)) {
@@ -114,6 +131,13 @@ public class Host extends LibraryEntry {
         return "deleted the podcast successfully.";
     }
 
+    /**
+     * Adds a new announcement to the host's list of announcements.
+     *
+     * @param commandInput Details of the announcement to be added, including its name
+     * and description.
+     * @return A message indicating whether the announcement was successfully added or not.
+     */
     public String addAnnouncement(final CommandInput commandInput) {
         String username = commandInput.getUsername();
         String name = commandInput.getName();
@@ -128,11 +152,23 @@ public class Host extends LibraryEntry {
         return " has successfully added new announcement.";
 
     }
+
+    /**
+     * Adds an announcement object to the host's list of announcements.
+     *
+     * @param announcement The announcement to be added.
+     */
     public void addAnnouncement(final Announcement announcement) {
         announcements.add(announcement);
 
     }
 
+    /**
+     * Checks if the host has an announcement with the given name.
+     *
+     * @param announcementName The name of the announcement to check.
+     * @return The announcement object if found, null otherwise.
+     */
     public Announcement hasAnnouncementWithName(final String announcementName) {
         for (Announcement announcement : announcements) {
             if (announcement.getName().equals(announcementName)) {
@@ -142,6 +178,13 @@ public class Host extends LibraryEntry {
         return null;
     }
 
+    /**
+     * Removes an announcement from the host's list of announcements.
+     *
+     * @param commandInput Contains the host's username and the name of the announcement
+     * to be removed.
+     * @return A message indicating the result of the announcement removal operation.
+     */
     public String removeAnnouncement(final CommandInput commandInput) {
         String username = commandInput.getUsername();
         String name = commandInput.getName();
@@ -153,6 +196,12 @@ public class Host extends LibraryEntry {
         host.removeAnnouncement(announcement);
         return " has successfully deleted the announcement.";
     }
+
+    /**
+     * Removes an announcement object from the host's list of announcements.
+     *
+     * @param announcement The announcement to be removed.
+     */
     public void removeAnnouncement(final Announcement announcement) {
         announcements.remove(announcement);
     }

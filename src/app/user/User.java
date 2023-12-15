@@ -12,6 +12,7 @@ import app.player.PlayerStats;
 import app.searchBar.Filters;
 import app.searchBar.SearchBar;
 import app.utils.Enums;
+import fileio.input.CommandInput;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -530,7 +531,12 @@ public class User {
         player.simulatePlayer(time);
     }
 
-
+    /**
+     * Toggles the connection status of a user and returns a message indicating the change.
+     *
+     * @param username The username of the user whose status is being toggled.
+     * @return A message indicating the successful change of the user's status.
+     */
     public String switchConnectionStatus(final String username) {
 
         isConnected = !isConnected;
@@ -538,12 +544,28 @@ public class User {
 
     }
 
+    /**
+     * Checks if the user is currently connected.
+     *
+     * @return A boolean value indicating the user's connection status.
+     */
     public boolean isConnected() {
         return isConnected;
     }
 
+    /**
+     * Retrieves the type of the user.
+     *
+     * @return A string representing the user's type.
+     */
     public String getType() {
         return type;
+    }
+
+    public String changePage(final CommandInput commandInput) {
+        pageType = Enums.PageType.valueOf(commandInput.getNextPage().toUpperCase() + "_PAGE");
+        return commandInput.getUsername() + " accessed " + commandInput.getNextPage()
+                + " successfully.";
     }
 
 

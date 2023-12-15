@@ -27,6 +27,6 @@ public class Enums { // diferite enumuri, le-am gurpat pe toate intr-un loc
     }
 
     public enum PageType {
-        HOME_PAGE, ARTIST_PAGE, HOST_PAGE, LIKED_CONTENT_PAGE
+        HOME_PAGE, ARTIST_PAGE, HOST_PAGE, LIKEDCONTENT_PAGE
     }
 }

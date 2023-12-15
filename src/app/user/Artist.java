@@ -35,6 +35,14 @@ public class Artist extends LibraryEntry {
     private List<Merch> merchs = new ArrayList<>();
     private Enums.PageType pageType;
 
+    /**
+     * Creates a new artist with the specified username, age, and city.
+     * Initializes empty lists for albums, events, and merchandise.
+     *
+     * @param username The artist's username.
+     * @param age      The artist's age.
+     * @param city     The artist's city.
+     */
     public Artist(final String username, final int age, final String city) {
         super(username);
         this.username = username;
@@ -44,7 +52,14 @@ public class Artist extends LibraryEntry {
     }
 
 
-
+    /**
+     * Adds a new album for the artist. Ensures no duplicate album names or
+     * song names within the album.
+     *
+     * @param commandInput Contains information about the new album,
+     * including name, release year, and songs.
+     * @return A message indicating the success or failure of adding the album.
+     */
     public String addAlbum(final CommandInput commandInput) {
         if (getAlbumByName(commandInput.getName()) != null) {
             return "has another album with the same name.";
@@ -73,6 +88,12 @@ public class Artist extends LibraryEntry {
         return "has added new album successfully.";
     }
 
+    /**
+     * Retrieves an album by its name from the artist's album list.
+     *
+     * @param albumName The name of the album to retrieve.
+     * @return The album object if found, null otherwise.
+     */
     public Album getAlbumByName(final String albumName) {
         for (Album album : albums) {
             if (album.getName().equals(albumName)) {
@@ -82,10 +103,22 @@ public class Artist extends LibraryEntry {
         return null;
     }
 
+    /**
+     * Adds an event to the artist's event list.
+     *
+     * @param event The event to add.
+     */
     public void addEvent(final Event event) {
         events.add(event);
     }
 
+    /**
+     * Adds a new event for the artist based on provided command input.
+     *
+     * @param commandInput Contains information about the event, including name,
+     * description, and date.
+     * @return A message indicating the success or failure of adding the event.
+     */
     public String addEvent(final CommandInput commandInput) {
 
         String eventName = commandInput.getName();
@@ -110,6 +143,12 @@ public class Artist extends LibraryEntry {
         return username + " has added new event successfully.";
     }
 
+    /**
+     * Checks if the artist has an event with a given name.
+     *
+     * @param eventName The name of the event to check.
+     * @return The event object if found, null otherwise.
+     */
     public Event hasEventWithName(final String eventName) {
         for (Event event : events) {
             if (event.getName().equals(eventName)) {
@@ -118,13 +157,30 @@ public class Artist extends LibraryEntry {
         }
         return null;
     }
-    private LocalDate parseDate(final String dateString) throws DateTimeParseException, InvalidDateException {
+
+    /**
+     * Parses a date string into a LocalDate object.
+     *
+     * @param dateString The date string to parse.
+     * @return A LocalDate object representing the parsed date.
+     * @throws DateTimeParseException   If the date string is not in the expected format.
+     * @throws InvalidDateException     If the date is invalid.
+     */
+    private LocalDate parseDate(final String dateString) throws DateTimeParseException,
+            InvalidDateException {
+
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         LocalDate date = LocalDate.parse(dateString, formatter);
         validateDate(date);
         return date;
     }
 
+    /**
+     * Validates a given LocalDate object.
+     *
+     * @param date The date to validate.
+     * @throws InvalidDateException If the date is invalid.
+     */
     private void validateDate(final LocalDate date) throws InvalidDateException {
         if (date.getYear() < 1900 || date.getYear() > 2023
                 || date.getMonthValue() > 12
@@ -134,16 +190,32 @@ public class Artist extends LibraryEntry {
         }
     }
 
+    /**
+     * Custom exception class for invalid dates.
+     */
     private class InvalidDateException extends Exception {
-        public InvalidDateException(final String errorMessage) {
+         InvalidDateException(final String errorMessage) {
             super(errorMessage);
         }
     }
 
+    /**
+     * Adds merchandise to the artist's merch list.
+     *
+     * @param merch The merch to add.
+     */
     public void addMerch(final Merch merch) {
         merchs.add(merch);
 
     }
+
+    /**
+     * Adds a new merchandise item for the artist based on provided command input.
+     *
+     * @param commandInput Contains information about the merchandise,
+     * including name, description, and price.
+     * @return A message indicating the success or failure of adding the merchandise.
+     */
     public String addMerch(final CommandInput commandInput) {
         String merchName = commandInput.getName();
         String description = commandInput.getDescription();
@@ -165,6 +237,12 @@ public class Artist extends LibraryEntry {
         return username + " has added new merchandise successfully.";
     }
 
+    /**
+     * Checks if the artist has merchandise with a given name.
+     *
+     * @param merchName The name of the merchandise to check.
+     * @return The merchandise object if found, null otherwise.
+     */
     private Merch hasMerchWithName(final String merchName) {
         for (Merch merch : merchs) {
             if (merch.getName().equals(merchName)) {

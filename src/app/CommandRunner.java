@@ -4,6 +4,7 @@ import app.audio.Collections.*;
 import app.pages.ArtistPage;
 import app.pages.HomePage;
 import app.pages.HostPage;
+import app.pages.LikedContentPage;
 import app.player.PlayerStats;
 import app.searchBar.Filters;
 import app.user.Artist;
@@ -893,10 +894,37 @@ public final class CommandRunner {
             objectNode.put("message", message);
 
             return objectNode;
+        } else if (Admin.getUser(commandInput.getUsername())
+                .getPageType()
+                .equals(Enums.PageType.LIKEDCONTENT_PAGE)) {
+
+            LikedContentPage likedContentPage = new LikedContentPage();
+            String message = likedContentPage.printCurrentPage(commandInput);
+
+            ObjectNode objectNode = objectMapper.createObjectNode();
+            objectNode.put("user", commandInput.getUsername());
+            objectNode.put("command", commandInput.getCommand());
+            objectNode.put("timestamp", commandInput.getTimestamp());
+            objectNode.put("message", message);
+
+            return objectNode;
         }
 
 
         return null;
+    }
+
+    public static ObjectNode changePage(final CommandInput commandInput) {
+        User user = Admin.getUser(commandInput.getUsername());
+        String message = user.changePage(commandInput);
+
+        ObjectNode objectNode = objectMapper.createObjectNode();
+        objectNode.put("command", commandInput.getCommand());
+        objectNode.put("user", commandInput.getUsername());
+        objectNode.put("timestamp", commandInput.getTimestamp());
+        objectNode.put("message", message);
+
+        return objectNode;
     }
 }
 
