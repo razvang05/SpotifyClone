@@ -2,7 +2,6 @@ package app.audio.Collections;
 
 import app.audio.Files.AudioFile;
 import app.audio.Files.Episode;
-import fileio.input.EpisodeInput;
 import lombok.Getter;
 
 import java.util.ArrayList;
@@ -36,6 +35,11 @@ public final class Podcast extends AudioCollection {
         return episodes.get(index);
     }
 
+    /**
+     * Adds a new episode to the podcast.
+     *
+     * @param episode The episode to be added to the podcast.
+     */
     public void addEpisode(final Episode episode) {
         episodes.add(episode);
     }

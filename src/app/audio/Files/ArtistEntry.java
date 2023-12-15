@@ -7,14 +7,10 @@ public class ArtistEntry extends LibraryEntry {
 
     private Artist artist;
 
-    public ArtistEntry(Artist artist) {
+    public ArtistEntry(final Artist artist) {
         super(artist.getUsername());
         this.artist = artist;
     }
 
-    //@Override
-//    public boolean matchesName(String name) {
-//        return artist.getUsername().equalsIgnoreCase(name);
-//    }
 
 }

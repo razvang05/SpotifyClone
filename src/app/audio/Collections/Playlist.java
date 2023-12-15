@@ -17,13 +17,7 @@ public final class Playlist extends AudioCollection {
     private Integer followers;
     private int timestamp;
 
-    public Integer getTotalLikes() {
-        Integer totalLikes = 0;
-        for (Song song : songs) {
-            totalLikes += song.getLikes();
-        }
-        return totalLikes;
-    }
+
     /**
      * Instantiates a new Playlist.
      *
@@ -141,5 +135,20 @@ public final class Playlist extends AudioCollection {
         } else {
             return count == Integer.parseInt(query);
         }
+    }
+
+    /**
+     * Calculates the total number of likes for all the songs in the playlist.
+     * This method iterates through each song in the playlist
+     * and accumulates the total number of likes.
+     *
+     * @return The total number of likes for all songs in the playlist.
+     */
+    public Integer getTotalLikes() {
+        Integer totalLikes = 0;
+        for (Song song : songs) {
+            totalLikes += song.getLikes();
+        }
+        return totalLikes;
     }
 }

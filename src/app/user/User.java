@@ -1,7 +1,6 @@
 package app.user;
 
 import app.Admin;
-import app.audio.Collections.Album;
 import app.audio.Collections.AudioCollection;
 import app.audio.Collections.Playlist;
 import app.audio.Collections.PlaylistOutput;

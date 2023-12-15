@@ -43,7 +43,7 @@ public class Artist extends LibraryEntry {
         this.albums = new ArrayList<>();
     }
 
-    // Metode pentru gestionarea albumelor
+
 
     public String addAlbum(final CommandInput commandInput) {
         if (getAlbumByName(commandInput.getName()) != null) {
@@ -57,10 +57,12 @@ public class Artist extends LibraryEntry {
             }
         }
 
-        Album newAlbum = new Album(commandInput.getUsername(), commandInput.getName(), commandInput.getReleaseYear(),
-                commandInput.getDescription());
+        Album newAlbum = new Album(commandInput.getUsername(), commandInput.getName(),
+                commandInput.getReleaseYear(), commandInput.getDescription());
+
         for (SongInput songInput : commandInput.getSongs()) {
-            Song newSong = new Song(songInput.getName(), songInput.getDuration(), newAlbum.getName(),
+            Song newSong = new Song(songInput.getName(), songInput.getDuration(),
+                    newAlbum.getName(),
                     songInput.getTags(), songInput.getLyrics(), songInput.getGenre(),
                     songInput.getReleaseYear(), this.username);
             newAlbum.addSong(newSong);
@@ -124,10 +126,10 @@ public class Artist extends LibraryEntry {
     }
 
     private void validateDate(final LocalDate date) throws InvalidDateException {
-        if (date.getYear() < 1900 || date.getYear() > 2023 ||
-                date.getMonthValue() > 12 ||
-                (date.getMonth() == Month.FEBRUARY && date.getDayOfMonth() > 28) ||
-                date.getDayOfMonth() > 31) {
+        if (date.getYear() < 1900 || date.getYear() > 2023
+                || date.getMonthValue() > 12
+                || (date.getMonth() == Month.FEBRUARY && date.getDayOfMonth() > 28)
+                || date.getDayOfMonth() > 31) {
             throw new InvalidDateException("Date is not valid.");
         }
     }

@@ -1,7 +1,6 @@
 package app;
 
 import app.audio.Collections.*;
-import app.audio.Files.Song;
 import app.pages.ArtistPage;
 import app.pages.HomePage;
 import app.pages.HostPage;
@@ -15,11 +14,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import fileio.input.CommandInput;
-import fileio.input.SongInput;
 
-import java.time.format.DateTimeFormatter;
 import java.util.*;
-import java.util.stream.Collectors;
+
 
 /**
  * The type Command runner.
@@ -46,7 +43,7 @@ public final class CommandRunner {
 
         ArrayList<String> results = user.search(filters, type);
         String message = "Search returned " + results.size() + " results";
-        if (user.isConnected() == false) {
+        if (!user.isConnected()) {
             message = user.getUsername() + " is offline.";
             results = new ArrayList<>();
         }
@@ -205,7 +202,7 @@ public final class CommandRunner {
     public static ObjectNode like(final CommandInput commandInput) {
         User user = Admin.getUser(commandInput.getUsername());
         String message;
-        if (user.isConnected() == false) {
+        if (!user.isConnected()) {
             message = user.getUsername() + " is offline.";
         } else {
             message = user.like();
@@ -448,6 +445,13 @@ public final class CommandRunner {
         return objectNode;
     }
 
+    /**
+     * Switches the connection status of a user.
+     * This method toggles the online/offline status of a user based on the given command input.
+     *
+     * @param commandInput The input command containing the user's username.
+     * @return An ObjectNode representing the result of the operation.
+     */
     public static ObjectNode switchConnectionStatus(final CommandInput commandInput) {
         User user = Admin.getUser(commandInput.getUsername());
         String message;
@@ -467,6 +471,12 @@ public final class CommandRunner {
         return objectNode;
     }
 
+    /**
+     * Retrieves a list of online users.
+     *
+     * @param commandInput The input command, used for logging purposes.
+     * @return An ObjectNode with a list of online user usernames.
+     */
     public static ObjectNode getOnlineUsers(final CommandInput commandInput) {
         List<String> users = Admin.getOnlineUsers();
 
@@ -478,6 +488,13 @@ public final class CommandRunner {
         return objectNode;
     }
 
+    /**
+     * Adds a new user to the system.
+     * This method creates a new user with the specified details and adds them to the system.
+     *
+     * @param commandInput The command input containing the new user's details.
+     * @return An ObjectNode indicating the result of the user addition.
+     */
     public static ObjectNode addUser(final CommandInput commandInput) {
         String username = commandInput.getUsername();
         int age = commandInput.getAge();
@@ -495,6 +512,13 @@ public final class CommandRunner {
         return objectNode;
     }
 
+    /**
+     * Deletes a user from the system.
+     * This method removes an existing user and their associated data based.
+     *
+     * @param commandInput The command input containing the username of the user to be deleted.
+     * @return An ObjectNode indicating the result of the user deletion.
+     */
     public static ObjectNode deleteUser(final CommandInput commandInput) {
         String username = commandInput.getUsername();
         String message = Admin.deleteUser(commandInput);
@@ -508,6 +532,14 @@ public final class CommandRunner {
         return objectNode;
     }
 
+    /**
+     * Adds an album for an artist.
+     * This method allows an artist to add a new album, provided the artist exists in the system.
+     *
+     * @param commandInput The command input containing the album's
+     * details and the artist's username.
+     * @return An ObjectNode indicating the result of the album addition.
+     */
     public static ObjectNode addAlbum(final CommandInput commandInput) {
         Artist artist = Admin.getArtist(commandInput.getUsername());
         User user = Admin.getUser(commandInput.getUsername());
@@ -530,6 +562,15 @@ public final class CommandRunner {
         return objectNode;
     }
 
+    /**
+     * Adds a new event for an artist.
+     * This method allows an artist to add a new event with
+     * specific details such as date and location.
+     *
+     * @param commandInput The command input containing the event details
+     * and the artist's username.
+     * @return A message indicating the result of the event addition.
+     */
     public static ObjectNode addEvent(final CommandInput commandInput) {
         Artist artist = Admin.getArtist(commandInput.getUsername());
         User user = Admin.getUser(commandInput.getUsername());
@@ -552,6 +593,14 @@ public final class CommandRunner {
         return objectNode;
     }
 
+    /**
+     * Adds a new merchandise item for an artist.
+     * This method allows an artist to add a new merchandise item with specific details.
+     *
+     * @param commandInput The command input containing the merchandise details
+     * and the artist's username.
+     * @return A message indicating the result of the merchandise addition.
+     */
     public static ObjectNode addMerch(final CommandInput commandInput) {
         Artist artist = Admin.getArtist(commandInput.getUsername());
         User user = Admin.getUser(commandInput.getUsername());
@@ -574,6 +623,13 @@ public final class CommandRunner {
         return objectNode;
     }
 
+    /**
+     * Adds a new podcast for a host.
+     * This method allows a host to add a new podcast with a unique name and episodes.
+     *
+     * @param commandInput The command input containing the podcast's details.
+     * @return A message indicating the result of the podcast addition.
+     */
     public static ObjectNode addPodcast(final CommandInput commandInput) {
         Host host = Admin.getHost(commandInput.getUsername());
         User user = Admin.getUser(commandInput.getUsername());
@@ -596,6 +652,13 @@ public final class CommandRunner {
         return objectNode;
     }
 
+    /**
+     * Removes a podcast from a host.
+     * This method allows a host to delete an existing podcast from their list.
+     *
+     * @param commandInput The command input containing the podcast's name.
+     * @return A message indicating the result of the podcast removal.
+     */
     public static ObjectNode removePodcast(final CommandInput commandInput) {
         Host host = Admin.getHost(commandInput.getUsername());
         User user = Admin.getUser(commandInput.getUsername());
@@ -618,6 +681,13 @@ public final class CommandRunner {
         return objectNode;
     }
 
+    /**
+     * Adds a new announcement for a host.
+     * Hosts can use this method to add announcements to their page.
+     *
+     * @param commandInput The command input containing the announcement details.
+     * @return A message indicating the result of the announcement addition.
+     */
     public static ObjectNode addAnnouncement(final CommandInput commandInput) {
         Host host = Admin.getHost(commandInput.getUsername());
         User user = Admin.getUser(commandInput.getUsername());
@@ -640,6 +710,13 @@ public final class CommandRunner {
         return objectNode;
     }
 
+    /**
+     * Removes an announcement from a host.
+     * This method allows a host to delete an existing announcement from their list.
+     *
+     * @param commandInput The command input containing the announcement's name.
+     * @return A message indicating the result of the announcement removal.
+     */
     public static ObjectNode removeAnnouncement(final CommandInput commandInput) {
         Host host = Admin.getHost(commandInput.getUsername());
         User user = Admin.getUser(commandInput.getUsername());
@@ -662,21 +739,28 @@ public final class CommandRunner {
         return objectNode;
     }
 
+    /**
+     * Displays all albums of a specific user.
+     * This method returns a list of albums associated with a user's username.
+     *
+     * @param commandInput The command input containing the user's username.
+     * @return An ObjectNode containing a list of albums.
+     */
     public static ObjectNode showAlbums(final CommandInput commandInput) {
-        ObjectMapper objectMapper = new ObjectMapper();
+        ObjectMapper objectMapper1 = new ObjectMapper();
         List<AlbumOutput> albums = Admin.showAlbums(commandInput.getUsername());
 
-        ObjectNode objectNode = objectMapper.createObjectNode();
+        ObjectNode objectNode = objectMapper1.createObjectNode();
         objectNode.put("command", commandInput.getCommand());
         objectNode.put("user", commandInput.getUsername());
         objectNode.put("timestamp", commandInput.getTimestamp());
 
 
-        ArrayNode albumsArray = objectMapper.createArrayNode();
+        ArrayNode albumsArray = objectMapper1.createArrayNode();
         for (AlbumOutput album : albums) {
-            ObjectNode albumNode = objectMapper.createObjectNode();
+            ObjectNode albumNode = objectMapper1.createObjectNode();
             albumNode.put("name", album.getName());
-            ArrayNode songsArray = objectMapper.createArrayNode();
+            ArrayNode songsArray = objectMapper1.createArrayNode();
             for (String song : album.getSongs()) {
                 songsArray.add(song);
             }
@@ -689,6 +773,13 @@ public final class CommandRunner {
         return objectNode;
     }
 
+    /**
+     * Displays all podcasts of a specific host.
+     * This method returns a list of podcasts associated with a host's username.
+     *
+     * @param commandInput The command input containing the host's username.
+     * @return An ObjectNode containing a list of podcasts.
+     */
     public static ObjectNode showPodcasts(final CommandInput commandInput) {
         List<Map<String, Object>> podcasts = Admin.showPodcasts(commandInput);
 
@@ -704,6 +795,13 @@ public final class CommandRunner {
         return objectNode;
     }
 
+    /**
+     * Retrieves the top 5 albums from the system.
+     * This method returns a list of the top 5 albums based on a predefined criteria.
+     *
+     * @param commandInput The command input used for logging purposes.
+     * @return An ObjectNode containing the top 5 albums.
+     */
     public static ObjectNode getTop5Albums(final CommandInput commandInput) {
         List<String> albums = Admin.getTop5Albums();
 
@@ -715,6 +813,13 @@ public final class CommandRunner {
         return objectNode;
     }
 
+    /**
+     * Retrieves a list of all users in the system.
+     * This method returns a list of usernames of all users, sorted in a specific order.
+     *
+     * @param commandInput The command input used for logging purposes.
+     * @return An ObjectNode containing the list of all users.
+     */
     public static ObjectNode getAllUsers(final CommandInput commandInput) {
         List<String> results = Admin.getAllUsers();
 
@@ -727,8 +832,17 @@ public final class CommandRunner {
         return objectNode;
     }
 
+    /**
+     * Prints the current page a user is viewing.
+     * This method returns information about the current page a user is on,
+     * including its content.
+     *
+     * @param commandInput The command input containing the user's username.
+     * @return An ObjectNode with the details of the current page.
+     */
     public static ObjectNode printCurrentPage(final CommandInput commandInput) {
-        if ((Admin.getUser(commandInput.getUsername())).isConnected() == false) {
+        if (!(Admin.getUser(commandInput.getUsername())).isConnected()) {
+
             ObjectNode objectNode = objectMapper.createObjectNode();
             objectNode.put("user", commandInput.getUsername());
             objectNode.put("command", commandInput.getCommand());
@@ -737,7 +851,10 @@ public final class CommandRunner {
 
             return objectNode;
         }
-        if (Admin.getUser(commandInput.getUsername()).getPageType().equals(Enums.PageType.HOME_PAGE)) {
+        if (Admin.getUser(commandInput.getUsername())
+                .getPageType()
+                .equals(Enums.PageType.HOME_PAGE)) {
+
             HomePage homePage = new HomePage();
             String message = homePage.printCurrentPage(commandInput);
 
@@ -748,9 +865,13 @@ public final class CommandRunner {
             objectNode.put("message", message);
 
             return objectNode;
-        } else if (Admin.getUser(commandInput.getUsername()).getPageType().equals(Enums.PageType.ARTIST_PAGE)) {
+        } else if (Admin.getUser(commandInput.getUsername())
+                .getPageType()
+                .equals(Enums.PageType.ARTIST_PAGE)) {
+
             ArtistPage artistPage = new ArtistPage();
             String message = artistPage.printCurrentPage(commandInput);
+
             ObjectNode objectNode = objectMapper.createObjectNode();
             objectNode.put("user", commandInput.getUsername());
             objectNode.put("command", commandInput.getCommand());
@@ -758,9 +879,13 @@ public final class CommandRunner {
             objectNode.put("message", message);
 
             return objectNode;
-        } else if (Admin.getUser(commandInput.getUsername()).getPageType().equals(Enums.PageType.HOST_PAGE)) {
+        } else if (Admin.getUser(commandInput.getUsername())
+                .getPageType()
+                .equals(Enums.PageType.HOST_PAGE)) {
+
             HostPage hostPage = new HostPage();
             String message = hostPage.printCurrentPage(commandInput);
+
             ObjectNode objectNode = objectMapper.createObjectNode();
             objectNode.put("user", commandInput.getUsername());
             objectNode.put("command", commandInput.getCommand());
@@ -774,3 +899,4 @@ public final class CommandRunner {
         return null;
     }
 }
+

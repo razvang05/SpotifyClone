@@ -11,8 +11,15 @@ public final class LibraryInput {
     public LibraryInput() {
     }
 
-    public static LibraryInput getInstance(){
-        if(instance == null){
+    /**
+     * Returns the singleton instance of the LibraryInput class.
+     * If the instance does not exist, it creates a new one.
+     * If it already exists, it returns the existing instance.
+     *
+     * @return The single instance of the LibraryInput class.
+     */
+    public static LibraryInput getInstance() {
+        if (instance == null) {
             instance = new LibraryInput();
         }
         return instance;

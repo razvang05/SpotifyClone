@@ -1,8 +1,6 @@
 package app.searchBar;
 
-import app.audio.Collections.Album;
 import app.audio.LibraryEntry;
-
 import java.util.ArrayList;
 import java.util.List;
 
