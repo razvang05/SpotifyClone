@@ -56,7 +56,7 @@ public class Host extends LibraryEntry {
      * @return Success or error message based on the operation outcome.
      */
     public String addPodcast(final CommandInput commandInput) {
-        // Verificăm dacă există deja un podcast cu acest nume
+
         for (Podcast podcast : podcasts) {
             if (podcast.getName().equals(commandInput.getName())) {
                 return "has another podcast with the same name.";
@@ -186,6 +186,7 @@ public class Host extends LibraryEntry {
      * @return A message indicating the result of the announcement removal operation.
      */
     public String removeAnnouncement(final CommandInput commandInput) {
+
         String username = commandInput.getUsername();
         String name = commandInput.getName();
         Host host = Admin.getHost(username);

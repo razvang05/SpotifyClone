@@ -125,7 +125,7 @@ public class User {
         }
         if (searchBar.getLastSearchType().equals("artist")) {
             pageType = Enums.PageType.ARTIST_PAGE;
-            //currentArtist = (Artist) selected;
+
             Artist artist = Admin.getArtist(selected.getName());
             setCurrentArtist(artist);
             return "Successfully selected %s".formatted(selected.getName()) + "'s page.";
@@ -562,6 +562,13 @@ public class User {
         return type;
     }
 
+    /**
+     * Changes the current page of the user.
+     *
+     * @param commandInput The input command containing the user's username and the page to be
+     *                     accessed.
+     * @return A message indicating the successful change of the user's page.
+     */
     public String changePage(final CommandInput commandInput) {
         pageType = Enums.PageType.valueOf(commandInput.getNextPage().toUpperCase() + "_PAGE");
         return commandInput.getUsername() + " accessed " + commandInput.getNextPage()

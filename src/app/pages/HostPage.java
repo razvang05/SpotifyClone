@@ -22,11 +22,9 @@ public class HostPage extends Page implements Page.PrintPage {
         String message = null;
 
 
-
-        // Obține informațiile despre podcasturi și anunțuri ale hostului
+        // Formats the list of podcasts of the host
         String podcasts = host.getPodcasts().isEmpty() ? "[]"
-                :
-                host.getPodcasts().stream()
+                : host.getPodcasts().stream()
                         .map(podcast -> {
                             String episodes = podcast.getEpisodes().stream()
                                     .map(episode -> episode.getName()
@@ -37,17 +35,17 @@ public class HostPage extends Page implements Page.PrintPage {
                         })
                         .collect(Collectors.joining("\n, ", "[", "\n]"));
 
-        // Formatează lista de anunțuri
+        // Formats the list of announcements of the host
+        // If no announcements exist, displays an empty list symbol "[]"
         String announcements = host.getAnnouncements().isEmpty() ? "[]"
-                :
-                host.getAnnouncements().stream()
+                : host.getAnnouncements().stream()
                         .map(announcement -> announcement.getName() + ":\n\t"
                                 +
                                 announcement.getDescription())
                         .collect(Collectors.joining("\n, ", "[", "\n]"));
 
 
-        // Construiește răspunsul
+
         message = "Podcasts:\n\t" + podcasts + "\n\nAnnouncements:\n\t" + announcements;
         return message;
     }

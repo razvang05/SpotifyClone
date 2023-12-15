@@ -789,7 +789,7 @@ public final class CommandRunner {
         objectNode.put("user", commandInput.getUsername());
         objectNode.put("timestamp", commandInput.getTimestamp());
 
-        // Adaugă lista de podcasturi în ObjectNode
+
         ArrayNode podcastArrayNode = objectMapper.valueToTree(podcasts);
         objectNode.set("result", podcastArrayNode);
 
@@ -914,6 +914,13 @@ public final class CommandRunner {
         return null;
     }
 
+    /**
+     * Changes the current page a user is viewing.
+     * This method allows a user to change the current page they are viewing.
+     *
+     * @param commandInput The command input containing the user's username.
+     * @return An ObjectNode indicating the result of the page change.
+     */
     public static ObjectNode changePage(final CommandInput commandInput) {
         User user = Admin.getUser(commandInput.getUsername());
         String message = user.changePage(commandInput);
@@ -926,5 +933,73 @@ public final class CommandRunner {
 
         return objectNode;
     }
+
+    /**
+     * Processes the command to remove an album for a specified artist.
+     *
+     * @param commandInput The command input containing the artist's username and
+     * the album's name.
+     * @return An ObjectNode representing the response with the status of the album removal.
+     */
+    public static ObjectNode removeAlbum(final CommandInput commandInput) {
+
+        Host host = Admin.getHost(commandInput.getUsername());
+        User user = Admin.getUser(commandInput.getUsername());
+        Artist artist = Admin.getArtist(commandInput.getUsername());
+        String message = null;
+        if (artist == null && (user != null || host != null)) {
+            message = commandInput.getUsername() + " is not a artist.";
+        } else if (artist == null) {
+            message = "The username " + commandInput.getUsername() + " doesn't exist.";
+        } else {
+            message = commandInput.getUsername() + " " + artist.removeAlbum(commandInput);
+        }
+
+        ObjectNode objectNode = objectMapper.createObjectNode();
+        objectNode.put("command", commandInput.getCommand());
+        objectNode.put("user", commandInput.getUsername());
+        objectNode.put("timestamp", commandInput.getTimestamp());
+        objectNode.put("message", message);
+
+        return objectNode;
+    }
+
+    /**
+     * Processes the command to remove an event for a specified artist.
+     * This method should be implemented to verify the existence of the artist and the event,
+     * and handle the removal of the event accordingly.
+     *
+     * @param commandInput The command input containing the artist's username
+     *  and the event's details.
+     * @return An ObjectNode representing the response with the status of the event removal.
+     */
+    public static ObjectNode removeEvent(final CommandInput commandInput) {
+
+        String message = null;
+
+        ObjectNode objectNode = objectMapper.createObjectNode();
+        objectNode.put("command", commandInput.getCommand());
+        objectNode.put("user", commandInput.getUsername());
+        objectNode.put("timestamp", commandInput.getTimestamp());
+        objectNode.put("message", message);
+
+        return objectNode;
+    }
+
+
+    public static ObjectNode getTop5Artists(final CommandInput commandInput) {
+
+        String message = null;
+
+        ObjectNode objectNode = objectMapper.createObjectNode();
+        objectNode.put("command", commandInput.getCommand());
+        objectNode.put("user", commandInput.getUsername());
+        objectNode.put("timestamp", commandInput.getTimestamp());
+        objectNode.put("message", message);
+
+        return objectNode;
+    }
+
+
 }
 
