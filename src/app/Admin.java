@@ -82,18 +82,25 @@ public final class Admin {
         }
     }
 
+<<<<<<< HEAD
     /**
      * Adds a new song to the global song list.
      * @param song The song to be added.
      */
+=======
+    ///metoda    sa adaug melodia in lista mare de melodii
+>>>>>>> origin/main
     public static void addSong(final Song song) {
         songs.add(song);
     }
 
+<<<<<<< HEAD
     /**
      * Adds a new podcast to the global podcast list.
      * @param podcast The podcast to be added.
      */
+=======
+>>>>>>> origin/main
     public static void addPodcast(final Podcast podcast) {
         podcasts.add(podcast);
     }
@@ -148,12 +155,15 @@ public final class Admin {
         return null;
     }
 
+<<<<<<< HEAD
     /**
      * Gets artist.
      *
      * @param username the username
      * @return the artist
      */
+=======
+>>>>>>> origin/main
     public static Artist getArtist(final String username) {
         for (Artist artist : artists) {
             if (artist.getUsername().equals(username)) {
@@ -163,12 +173,15 @@ public final class Admin {
         return null;
     }
 
+<<<<<<< HEAD
     /**
      * Gets host.
      *
      * @param username the username
      * @return the host
      */
+=======
+>>>>>>> origin/main
     public static Host getHost(final String username) {
         for (Host host : hosts) {
             if (host.getUsername().equals(username)) {
@@ -266,6 +279,7 @@ public final class Admin {
         return onlineUsers;
     }
 
+<<<<<<< HEAD
     /**
      * Adds a new user, artist, or host to the system.
      *
@@ -275,6 +289,8 @@ public final class Admin {
      * @param city     The city of the user.
      * @return A success or error message.
      */
+=======
+>>>>>>> origin/main
     public static String addUser(final String username, final String userType,
                                  final int age, final String city) {
 
@@ -302,6 +318,7 @@ public final class Admin {
         return "The username " + username + " has been added successfully.";
     }
 
+<<<<<<< HEAD
     /**
      * Deletes a user, artist, or host from the system.
      *
@@ -314,6 +331,13 @@ public final class Admin {
         Artist artistToDelete = Admin.getArtist(commandInput.getUsername());
         Host hostToDelete = Admin.getHost(commandInput.getUsername());
 
+=======
+    public static String deleteUser(final CommandInput commandInput) {
+        // Verificăm dacă există un utilizator cu acest nume
+        User userToDelete = Admin.getUser(commandInput.getUsername());
+        Artist artistToDelete = Admin.getArtist(commandInput.getUsername());
+        Host hostToDelete = Admin.getHost(commandInput.getUsername());
+>>>>>>> origin/main
         if (userToDelete == null && artistToDelete == null && hostToDelete == null) {
             return "The username " + commandInput.getUsername() + " doesn't exist.";
         }
@@ -332,12 +356,20 @@ public final class Admin {
                 return commandInput.getUsername() + " can't be deleted.";
             }
 
+<<<<<<< HEAD
 
+=======
+            // Verifică dacă podcasturile host-ului sunt ascultate în prezent
+>>>>>>> origin/main
             if (isHostPodcastCurrentlyPlayed(hostToDelete)) {
                 return commandInput.getUsername() + " can't be deleted.";
             }
 
+<<<<<<< HEAD
 
+=======
+            // Procesul de ștergere a host-ului
+>>>>>>> origin/main
             deleteHost(hostToDelete);
             return commandInput.getUsername() + " was successfully deleted.";
         }
@@ -355,6 +387,7 @@ public final class Admin {
 
     }
 
+<<<<<<< HEAD
     /**
      * Deletes an album and its associated songs.
      *
@@ -365,6 +398,13 @@ public final class Admin {
         List<Song> songsToRemove = new ArrayList<>(Admin.getSongs());
 
 
+=======
+    private static void deleteAlbum(final Album album) {
+        // Creează o copie a listei de melodii pentru a evita ConcurrentModificationException
+        List<Song> songsToRemove = new ArrayList<>(Admin.getSongs());
+
+        // Șterge fiecare melodie din album
+>>>>>>> origin/main
         for (User user : users) {
             user.getLikedSongs().removeIf((song -> album.getSongs().contains(song)));
         }
@@ -373,6 +413,7 @@ public final class Admin {
             songs.remove(song);
         }
 
+<<<<<<< HEAD
 
         album.getSongs().clear();
     }
@@ -387,10 +428,22 @@ public final class Admin {
         List<Album> albumsToRemove = new ArrayList<>(artist.getAlbums());
 
 
+=======
+        // Șterge melodiile din album
+        album.getSongs().clear();
+    }
+
+    private static void deleteAllAlbumsOfArtist(final Artist artist) {
+        // Creează o copie a listei de albume pentru a evita ConcurrentModificationException
+        List<Album> albumsToRemove = new ArrayList<>(artist.getAlbums());
+
+        // Șterge fiecare album
+>>>>>>> origin/main
         for (Album album : albumsToRemove) {
             deleteAlbum(album);
         }
 
+<<<<<<< HEAD
 
         artist.getAlbums().clear();
     }
@@ -417,6 +470,25 @@ public final class Admin {
      * @param artist The artist to check for.
      * @return true if any user is currently on the artist's page, false otherwise.
      */
+=======
+        // Șterge lista de albume a artistului
+        artist.getAlbums().clear();
+    }
+
+    private static void deleteArtist(Artist artist) {
+        // Șterge toate albumele artistului
+        deleteAllAlbumsOfArtist(artist);
+
+        // Șterge toate evenimentele artistului
+        artist.getEvents().clear();
+
+
+        // Șterge artistul din lista de artiști
+        Admin.getArtists().remove(artist);
+    }
+
+
+>>>>>>> origin/main
     private static boolean isArtistPageCurrentlyAccessed(final Artist artist) {
         for (User user : Admin.getUsers()) {
             if (user.getPageType() == Enums.PageType.ARTIST_PAGE
@@ -427,11 +499,14 @@ public final class Admin {
         return false;
     }
 
+<<<<<<< HEAD
     /**
      * Determines if any user is currently playing an album of a specific artist.
      * @param artist The artist whose album playback is to be checked.
      * @return true if an album of the artist is currently being played, false otherwise.
      */
+=======
+>>>>>>> origin/main
     private static boolean isArtistAlbumCurrentlyPlayed(final Artist artist) {
         for (User user : Admin.getUsers()) {
             Player player = user.getPlayer();
@@ -446,11 +521,14 @@ public final class Admin {
         return false;
     }
 
+<<<<<<< HEAD
     /**
      * Checks if any user is currently playing a song by a specific artist.
      * @param artist The artist whose song playback is to be checked.
      * @return true if a song by the artist is currently being played, false otherwise.
      */
+=======
+>>>>>>> origin/main
     private static boolean isArtistSongCurrentlyPlayed(final Artist artist) {
         for (User user : Admin.getUsers()) {
             Player player = user.getPlayer();
@@ -464,12 +542,15 @@ public final class Admin {
         return false;
     }
 
+<<<<<<< HEAD
     /**
      * Determines if any user is currently playing a playlist containing
      * a song by a specific artist.
      * @param artist The artist to check for in the playlists.
      * @return true if a song by the artist is in a currently played playlist, false otherwise.
      */
+=======
+>>>>>>> origin/main
     private static boolean isArtistSongInPlaylistCurrentlyPlayed(final Artist artist) {
         for (User user : Admin.getUsers()) {
             Player player = user.getPlayer();
@@ -485,11 +566,14 @@ public final class Admin {
     }
 
 
+<<<<<<< HEAD
     /**
      * Checks if a specific host's page is currently being accessed by any user.
      * @param host The host to check for.
      * @return true if any user is currently on the host's page, false otherwise.
      */
+=======
+>>>>>>> origin/main
     private static boolean isHostPageCurrentlyAccessed(final Host host) {
         for (User user : users) {
             if (user.getPageType() == Enums.PageType.HOST_PAGE
@@ -500,11 +584,14 @@ public final class Admin {
         return false;
     }
 
+<<<<<<< HEAD
     /**
      * Determines if any user is currently playing a podcast of a specific host.
      * @param host The host whose podcast playback is to be checked.
      * @return true if a podcast of the host is currently being played, false otherwise.
      */
+=======
+>>>>>>> origin/main
     private static boolean isHostPodcastCurrentlyPlayed(final Host host) {
         for (User user : Admin.getUsers()) {
             Player player = user.getPlayer();
@@ -517,16 +604,22 @@ public final class Admin {
         return false;
     }
 
+<<<<<<< HEAD
     /**
      * Deletes a host and all their associated data from the system.
      * @param host The host to be deleted.
      */
     private static void deleteHost(final Host host) {
 
+=======
+    private static void deleteHost(final Host host) {
+        // Șterge toate podcasturile host-ului
+>>>>>>> origin/main
         for (Podcast podcast : host.getPodcasts()) {
             Admin.removePodcast(podcast);
         }
 
+<<<<<<< HEAD
 
         host.getAnnouncements().clear();
 
@@ -540,6 +633,16 @@ public final class Admin {
      * @param owner The owner of the playlist.
      * @return true if the listener is playing the owner's playlist, false otherwise.
      */
+=======
+        // Șterge toate anunțurile host-ului
+        host.getAnnouncements().clear();
+
+        // În cele din urmă, șterge host-ul din lista de host-uri
+        Admin.getHosts().remove(host);
+    }
+
+
+>>>>>>> origin/main
     private static boolean isListeningToPlaylistOf(final User listener, final User owner) {
         if (listener.getPlayer().getCurrentAudioFile() == null
                 || !listener.getPlayer().getType().equals("playlist")) {
@@ -552,33 +655,48 @@ public final class Admin {
         return currentPlaylist.getOwner().equals(owner.getUsername());
     }
 
+<<<<<<< HEAD
     /**
      * Deletes a user and all their associated data from the system.
      * @param user The user to be deleted.
      */
     public static void deleteUser(final User user) {
 
+=======
+    public static void deleteUser(final User user) {
+        // Elimină utilizatorul din lista de utilizatori
+>>>>>>> origin/main
 
         for (Playlist playlist : user.getFollowedPlaylists()) {
             playlist.decreaseFollowers();
         }
         for (Playlist playlist : new ArrayList<>(user.getPlaylists())) {
+<<<<<<< HEAD
 
+=======
+            // Presupunând că există o metodă pentru a șterge playlisturi
+>>>>>>> origin/main
             deletePlaylist(playlist);
         }
         users.remove(user);
     }
 
+<<<<<<< HEAD
     /**
      * Deletes a playlist and all its associated data from the system.
      * @param playlist The playlist to be deleted.
      */
     public static void deletePlaylist(final Playlist playlist) {
 
+=======
+    public static void deletePlaylist(final Playlist playlist) {
+        // Elimină playlistul din orice locație unde este referit
+>>>>>>> origin/main
         for (User user : users) {
             user.getFollowedPlaylists().remove(playlist);
         }
 
+<<<<<<< HEAD
 
     }
 
@@ -587,6 +705,12 @@ public final class Admin {
      * @param artistUsername The username of the artist.
      * @return A list of AlbumOutput objects representing the artist's albums.
      */
+=======
+        // Și alte operații necesare pentru a elimina playlistul
+    }
+
+
+>>>>>>> origin/main
     public static List<AlbumOutput> showAlbums(final String artistUsername) {
         Artist artist = getArtist(artistUsername);
 
@@ -601,11 +725,14 @@ public final class Admin {
         return albumsOutput;
     }
 
+<<<<<<< HEAD
     /**
      * Displays the podcasts of a specific host.
      * @param commandInput The command input containing the host's username.
      * @return A list of maps, each representing a podcast with its details.
      */
+=======
+>>>>>>> origin/main
     public static List<Map<String, Object>> showPodcasts(final CommandInput commandInput) {
         Host host = Admin.getHost(commandInput.getUsername());
 
@@ -624,11 +751,14 @@ public final class Admin {
         return podcastList;
     }
 
+<<<<<<< HEAD
     /**
      * Retrieves the top 5 albums based on likes.
      *
      * @return List of top 5 album names.
      */
+=======
+>>>>>>> origin/main
     public static List<String> getTop5Albums() {
         Map<Album, Integer> albumLikes = new HashMap<>();
 
@@ -650,11 +780,14 @@ public final class Admin {
 
     }
 
+<<<<<<< HEAD
     /**
      * Retrieves the list of all albums in the system.
      *
      * @return List of all albums.
      */
+=======
+>>>>>>> origin/main
     public static List<Album> getAllAlbums() {
         List<Album> allAlbums = new ArrayList<>();
         for (Artist artist : artists) {
@@ -663,6 +796,7 @@ public final class Admin {
         return allAlbums;
     }
 
+<<<<<<< HEAD
     /**
      * Retrieves the list of all users in the system.
      *
@@ -672,21 +806,39 @@ public final class Admin {
         List<String> userNames = new ArrayList<>();
 
 
+=======
+    public static List<String> getAllUsers() {
+        List<String> userNames = new ArrayList<>();
+
+        // Adaugă numele utilizatorilor normali
+>>>>>>> origin/main
         List<String> normalUsers = users.stream()
                 .map(User::getUsername)
                 .collect(Collectors.toList());
 
+<<<<<<< HEAD
 
+=======
+        // Adaugă numele artiștilor
+>>>>>>> origin/main
         List<String> artistUsers = artists.stream()
                 .map(Artist::getUsername)
                 .collect(Collectors.toList());
 
+<<<<<<< HEAD
 
+=======
+        // Adaugă numele hostilor
+>>>>>>> origin/main
         List<String> hostUsers = hosts.stream()
                 .map(Host::getUsername)
                 .collect(Collectors.toList());
 
+<<<<<<< HEAD
 
+=======
+        // Combină și sortează toate numele
+>>>>>>> origin/main
         userNames = Stream.of(normalUsers, artistUsers, hostUsers)
                 .flatMap(List::stream)
                 .collect(Collectors.toList());
@@ -695,30 +847,42 @@ public final class Admin {
     }
 
 
+<<<<<<< HEAD
     /**
      * Adds a new episode to the list of episodes.
      * @param episode The episode to be added.
      */
+=======
+>>>>>>> origin/main
     public static void addEpisode(final Episode episode) {
         episodes.add(episode);
     }
 
+<<<<<<< HEAD
     /**
      * Removes a specified podcast from the list of podcasts.
      * @param podcast The podcast to be removed.
      */
+=======
+>>>>>>> origin/main
     public static void removePodcast(final Podcast podcast) {
         podcasts.remove(podcast);
     }
 
+<<<<<<< HEAD
     /**
      * Removes a specified album from an artist's album list.
      * @param album The album to be removed.
      * @param artist The artist whose album is being removed.
      */
+=======
+>>>>>>> origin/main
     public static void removeAlbum(final Album album, final Artist artist) {
         artist.getAlbums().remove(album);
 
     }
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/main
